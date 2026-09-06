@@ -1,0 +1,15 @@
+{
+  "experiment": "Threshold_Opt_T10",
+  "url": "http://127.0.0.1:3297",
+  "requests": 2500,
+  "concurrency": 30,
+  "successful": 951,
+  "failed": 1549,
+  "elapsed_time_sec": 88.649931123,
+  "throughput_rps": 10.727588707096755,
+  "dropout_percent": 61.96,
+  "p50_ms": 859.311,
+  "p95_ms": 3001.6,
+  "p99_ms": 3002.521,
+  "timestamp": "2026-09-06T15:57:20Z"
+}

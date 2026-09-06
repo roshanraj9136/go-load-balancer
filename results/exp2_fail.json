@@ -1,0 +1,15 @@
+{
+  "experiment": "3 Backends (Fault Tolerant)",
+  "url": "http://127.0.0.1:3297/?delay=10ms",
+  "requests": 5000,
+  "concurrency": 40,
+  "successful": 0,
+  "failed": 5000,
+  "elapsed_time_sec": 4.38373725,
+  "throughput_rps": 0,
+  "dropout_percent": 100,
+  "p50_ms": 1.469,
+  "p95_ms": 104.792,
+  "p99_ms": 203.368,
+  "timestamp": "2026-08-23T15:40:31Z"
+}

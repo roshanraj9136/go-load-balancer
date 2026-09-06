@@ -1,0 +1,16 @@
+﻿# Binaries
+backend
+client
+loadbalancer
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Database files
+*.db
+
+# Temporary
+__pycache__/
+*.pyc
+.system_generated/

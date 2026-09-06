@@ -1,0 +1,15 @@
+{
+  "experiment": "Three_Backends_T20",
+  "url": "http://127.0.0.1:3297",
+  "requests": 3000,
+  "concurrency": 25,
+  "successful": 2369,
+  "failed": 631,
+  "elapsed_time_sec": 58.008914843,
+  "throughput_rps": 40.83855052989101,
+  "dropout_percent": 21.033333333333335,
+  "p50_ms": 184.872,
+  "p95_ms": 3001.641,
+  "p99_ms": 3002.223,
+  "timestamp": "2026-09-06T15:54:32Z"
+}

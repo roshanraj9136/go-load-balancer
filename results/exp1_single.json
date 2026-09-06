@@ -1,0 +1,15 @@
+{
+  "experiment": "Single_Backend_Baseline",
+  "url": "http://127.0.0.1:3297",
+  "requests": 3000,
+  "concurrency": 25,
+  "successful": 952,
+  "failed": 2048,
+  "elapsed_time_sec": 20.024395388,
+  "throughput_rps": 47.54200971133961,
+  "dropout_percent": 68.26666666666667,
+  "p50_ms": 0.745,
+  "p95_ms": 288.616,
+  "p99_ms": 3001.873,
+  "timestamp": "2026-09-06T15:53:30Z"
+}

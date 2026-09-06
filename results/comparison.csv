@@ -1,0 +1,7 @@
+Experiment,Requests,Concurrency,Successful,Failed,Throughput_RPS,Dropout_Percent,p50_ms,p95_ms,p99_ms,Timestamp
+1_Backend_Baseline,5000,40,5000,0,535.96,0.00%,83.96 ms,115.87 ms,182.23 ms,2026-08-23T15:37:33Z
+3_Backends_Balanced,5000,40,5000,0,526.47,0.00%,85.37 ms,109.84 ms,184.05 ms,2026-08-23T15:37:45Z
+3_Backends_With_Faults,2000,20,2000,0,568.24,0.00%,18.50 ms,81.44 ms,85.27 ms,2026-08-23T15:37:49Z
+Single_Backend_Baseline,3000,25,47.54,68.27,0.74,288.62,3001.87
+Three_Backends_T20,3000,25,40.84,21.03,184.87,3001.64,3002.22
+Fault_Tolerance_Node_Down,2000,20,23.18,68.50,0.79,3001.46,3002.55

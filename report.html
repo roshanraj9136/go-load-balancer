@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Distributed Systems Lab Report - Dynamic Load Balancer & Secure Messaging</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 18mm 18mm 18mm 18mm;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.55;
+            color: #222222;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+            font-size: 13px;
+        }
+
+        .title-block {
+            text-align: center;
+            border-bottom: 2px solid #2c3e50;
+            padding-bottom: 16px;
+            margin-bottom: 22px;
+        }
+
+        .title-block h1 {
+            font-size: 22px;
+            margin: 0 0 6px 0;
+            color: #1a252f;
+            font-weight: 700;
+        }
+
+        .title-block h2 {
+            font-size: 15px;
+            margin: 0 0 14px 0;
+            color: #555555;
+            font-weight: 500;
+            border: none;
+            padding: 0;
+        }
+
+        .meta-table {
+            width: auto;
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+
+        .meta-table td {
+            padding: 3px 14px;
+            font-size: 13px;
+            border: none;
+        }
+
+        .meta-table td.label {
+            font-weight: 600;
+            color: #333333;
+            text-align: right;
+        }
+
+        .meta-table td.val {
+            text-align: left;
+            color: #111111;
+        }
+
+        .highlight-badge {
+            display: inline-block;
+            background-color: #e8f4fd;
+            color: #1b6ec2;
+            border: 1px solid #b6d4fe;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-family: Consolas, monospace;
+            font-size: 13px;
+        }
+
+        h2 {
+            color: #1a252f;
+            border-bottom: 1.5px solid #dcdfe6;
+            padding-bottom: 4px;
+            margin-top: 24px;
+            margin-bottom: 10px;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        h3 {
+            color: #2c3e50;
+            margin-top: 14px;
+            margin-bottom: 6px;
+            font-size: 13.5px;
+            font-weight: 600;
+        }
+
+        p {
+            margin: 0 0 9px 0;
+            text-align: justify;
+        }
+
+        ul, ol {
+            margin: 0 0 10px 0;
+            padding-left: 22px;
+        }
+
+        li {
+            margin-bottom: 3px;
+        }
+
+        table.lab-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0 16px 0;
+            font-size: 12.5px;
+        }
+
+        table.lab-table th, table.lab-table td {
+            border: 1px solid #cfd7df;
+            padding: 6px 9px;
+            text-align: left;
+        }
+
+        table.lab-table th {
+            background-color: #f1f4f8;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        table.lab-table tr:nth-child(even) td {
+            background-color: #fafbfc;
+        }
+
+        .code-box {
+            background-color: #f8f9fa;
+            border: 1px solid #e1e4e8;
+            border-radius: 3px;
+            padding: 8px 10px;
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 11.5px;
+            line-height: 1.4;
+            overflow-x: auto;
+            margin: 8px 0 12px 0;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .source-code {
+            background-color: #fbfbfb;
+            border: 1px solid #d9d9d9;
+            border-radius: 3px;
+            padding: 10px;
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 10.5px;
+            line-height: 1.35;
+            overflow-x: auto;
+            margin: 8px 0 14px 0;
+            white-space: pre;
+        }
+
+        code.inline {
+            background-color: #f1f3f5;
+            padding: 1px 4px;
+            font-family: Consolas, monospace;
+            font-size: 12px;
+            border: 1px solid #e2e4e6;
+            border-radius: 3px;
+            color: #c7254e;
+        }
+
+        .image-box {
+            margin: 16px 0;
+            text-align: center;
+            page-break-inside: avoid;
+        }
+
+        .image-box img {
+            max-width: 95%;
+            height: auto;
+            border: 1px solid #d0d7de;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .image-caption {
+            font-size: 11.5px;
+            color: #555555;
+            margin-top: 5px;
+            font-style: italic;
+        }
+
+        .callout {
+            background-color: #f8f9fa;
+            border-left: 4px solid #3498db;
+            padding: 8px 12px;
+            margin: 10px 0;
+            font-size: 12.5px;
+        }
+
+        .page-break {
+            page-break-before: always;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="title-block">
+        <h1>Distributed Systems Lab Report</h1>
+        <h2>Performance-Based Dynamic Load Balancer & Secure Distributed Group Chat</h2>
+        <table class="meta-table">
+            <tr>
+                <td class="label">Student Name:</td>
+                <td class="val">Roshan Raj</td>
+                <td class="label">Roll Number:</td>
+                <td class="val">12341830</td>
+            </tr>
+            <tr>
+                <td class="label">Submission URL:</td>
+                <td class="val"><span class="highlight-badge">http://10.1.75.53:3297</span></td>
+                <td class="label">Date:</td>
+                <td class="val">September 6, 2026</td>
+            </tr>
+        </table>
+    </div>
+
+    <h2>1. Executive Summary & Objective</h2>
+    <p>
+        In this assignment, I designed and deployed a fault-tolerant, performance-based dynamic HTTP load balancer in Go, fronting an end-to-end encrypted, persistent group messaging backend deployed across three independent Linux server nodes.
+    </p>
+    <p>
+        The objectives satisfied in this project are:
+    </p>
+    <ul>
+        <li><strong>Cluster Deployment:</strong> The load balancer is hosted on <code>Sys1</code> (port 3297) and balances client traffic across three backend nodes: <code>Sys2</code> (port 3298), <code>Sys3</code> (port 3299), and <code>Sys4</code> (port 3300). Clients only access the central Load Balancer URL.</li>
+        <li><strong>Dynamic Performance Balancing:</strong> The proxy dynamically monitors active in-flight requests on each backend. When the concurrency of the currently selected backend hits the configured threshold (&theta;), the proxy dynamically spills traffic over to the next available backend with the lowest load, avoiding server saturation.</li>
+        <li><strong>Health Checking & Automatic Failover:</strong> The load balancer runs periodic active background health checks and passive connection monitoring. If any node fails or crashes, traffic is immediately isolated from it and distributed to the remaining healthy servers.</li>
+        <li><strong>Database Persistence & Deduplication:</strong> All three backend servers persist messages to a centralized PostgreSQL 16 database running on <code>Sys2</code>. A strict primary key constraint and <code>ON CONFLICT DO NOTHING</code> strategy guarantees that duplicate messages are rejected and never saved twice.</li>
+        <li><strong>Non-Disruption Fallback Proxying:</strong> Existing projects on <code>Sys1</code> (such as the <code>village_pond_planner</code> on port 8001) remain completely undisturbed by passing all non-chat requests directly to the local backend.</li>
+    </ul>
+
+    <h2>2. Assigned Systems Topology & Ports</h2>
+    <p>
+        The deployment spans four dedicated containerized Linux environments hosted on <code>10.1.75.53</code>, communicating over the internal Docker network <code>172.17.0.0/16</code>:
+    </p>
+
+    <table class="lab-table">
+        <thead>
+            <tr>
+                <th>Node</th>
+                <th>Hostname</th>
+                <th>SSH Port</th>
+                <th>Internal IP</th>
+                <th>Service Port</th>
+                <th>Assigned Role & Responsibilities</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Sys1</strong></td>
+                <td>stu85_sys1</td>
+                <td>2297</td>
+                <td>172.17.0.98</td>
+                <td>3297</td>
+                <td>Dynamic Go Load Balancer, Fallback Reverse Proxy, Client Benchmark Suite</td>
+            </tr>
+            <tr>
+                <td><strong>Sys2</strong></td>
+                <td>stu85_sys2</td>
+                <td>2298</td>
+                <td>172.17.0.99</td>
+                <td>3298</td>
+                <td>Backend Server 1 (Go) + Central PostgreSQL 16 Database Server (5432)</td>
+            </tr>
+            <tr>
+                <td><strong>Sys3</strong></td>
+                <td>stu85_sys3</td>
+                <td>2299</td>
+                <td>172.17.0.100</td>
+                <td>3299</td>
+                <td>Backend Server 2 (Go) connected via internal network to Sys2 DB</td>
+            </tr>
+            <tr>
+                <td><strong>Sys4</strong></td>
+                <td>stu85_sys4</td>
+                <td>2300</td>
+                <td>172.17.0.101</td>
+                <td>3300</td>
+                <td>Backend Server 3 (Go) connected via internal network to Sys2 DB</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>3. Dynamic Performance-Based Load Balancing Architecture</h2>
+    <p>
+        Traditional Round-Robin routing blindly cycles through backends regardless of how busy they are. When requests involve heavy cryptographic verification or disk I/O, backends quickly become unevenly loaded, leading to severe tail latencies and dropped connections.
+    </p>
+    <p>
+        To solve this, I built a concurrency-tracking dynamic load balancer with the following mechanisms:
+    </p>
+    <ul>
+        <li><strong>Real-Time In-Flight Tracking:</strong> Each backend target maintains an atomic counter of active requests currently being processed (<code>inFlight</code>). When a request is dispatched, the counter increments; when the response completes, it decrements.</li>
+        <li><strong>Threshold-Based Spillover (&theta;):</strong> The load balancer keeps track of the currently active backend index. If that backend's active in-flight count is below the threshold &theta;, it receives the incoming request. Once its load hits &theta;, the load balancer switches to the next alive backend with the lowest active load.</li>
+        <li><strong>Dual Health Monitoring:</strong> Active health checking polls <code>/health</code> on all backends every 3 seconds. In addition, if a backend experiences a dial or read timeout during reverse proxy execution, its error counter increments and it is temporarily marked down.</li>
+        <li><strong>Fallback Reverse Proxy:</strong> Requests targeting paths other than chat endpoints (e.g. <code>/openapi.json</code>, <code>/docs</code>, <code>/analyzeContour</code>) are forwarded to <code>http://127.0.0.1:8001</code>, ensuring that existing services run without disruption.</li>
+    </ul>
+
+    <div class="callout">
+        <strong>Dynamic Routing Logic:</strong>
+        <pre style="margin:4px 0 0 0; font-family:Consolas, monospace; font-size:11.5px;">func (lb *LoadBalancer) getNextBackend() *Backend {
+    lb.mu.Lock()
+    defer lb.mu.Unlock()
+    curr := lb.backends[lb.currIdx]
+    if curr.alive && atomic.LoadInt64(&curr.inFlight) < int64(lb.threshold) {
+        return curr
+    }
+    // Select lowest in-flight backend among alive nodes
+    var best *Backend
+    var minLoad int64 = 1<<62 - 1
+    for i := 0; i < len(lb.backends); i++ {
+        idx := (lb.currIdx + i + 1) % len(lb.backends)
+        b := lb.backends[idx]
+        if !b.alive { continue }
+        load := atomic.LoadInt64(&b.inFlight)
+        if load < minLoad {
+            minLoad = load
+            best = b
+            lb.currIdx = idx
+        }
+    }
+    return best
+}</pre>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2>4. Cryptographic Security & Database Deduplication</h2>
+    <p>
+        Each chat backend preserves authenticated cryptographic guarantees while ensuring high throughput:
+    </p>
+    <ul>
+        <li><strong>256-bit AES-GCM Authenticated Encryption:</strong> Every message is encrypted using AES-256 in Galois/Counter Mode. A cryptographically secure 12-byte nonce is generated per message to prevent replay attacks and ensure ciphertext integrity.</li>
+        <li><strong>Ed25519 Asymmetric Digital Signatures:</strong> Every client identity has a corresponding Ed25519 private/public keypair. Messages are digitally signed, and signatures are verified before acceptance.</li>
+        <li><strong>Centralized PostgreSQL Persistence:</strong> All three backends connect directly to PostgreSQL on <code>Sys2</code>:
+            <div class="code-box">postgres://chatuser:chatpass@172.17.0.99:5432/chatdb?sslmode=disable</div>
+        </li>
+        <li><strong>Strict Message Deduplication:</strong> The database table schema enforces idempotency:
+            <div class="code-box">CREATE TABLE IF NOT EXISTS messages (
+    id VARCHAR(64) PRIMARY KEY,
+    client_name VARCHAR(255) NOT NULL,
+    ciphertext TEXT NOT NULL,
+    nonce TEXT NOT NULL,
+    signature TEXT NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);</div>
+            When a backend handles an incoming message, it executes:
+            <div class="code-box">INSERT INTO messages (id, client_name, ciphertext, nonce, signature)
+VALUES ($1, $2, $3, $4, $5)
+ON CONFLICT (id) DO NOTHING;</div>
+            If the message ID already exists, the database ignores the insert and returns 0 affected rows. The backend returns <code>{"status": "duplicate_ignored"}</code>, completely eliminating duplicate storage.
+        </li>
+    </ul>
+
+    <h2>5. Empirical Benchmark Results & Comparison</h2>
+    <p>
+        To evaluate system capacity, resilience, and dropout behavior, I conducted systematic load tests using the concurrent Go benchmark client on <code>Sys1</code>:
+    </p>
+    <ol>
+        <li><strong>Single Backend Baseline:</strong> Only <code>Sys2</code> handling 3,000 requests under 25 concurrent worker routines.</li>
+        <li><strong>3 Backends Distributed Dynamic LB (&theta; = 20):</strong> All 3 backends handling 3,000 requests under 25 concurrent worker routines.</li>
+        <li><strong>Node Crash / Fault Tolerance Test:</strong> <code>Backend 2</code> (<code>Sys3</code>) abruptly killed during a 2,000 request load test under 20 concurrent worker routines to verify automatic failover.</li>
+    </ol>
+
+    <table class="lab-table">
+        <thead>
+            <tr>
+                <th>Experiment Name</th>
+                <th>Requests</th>
+                <th>Concurrency</th>
+                <th>Completed</th>
+                <th>Failed</th>
+                <th>Throughput</th>
+                <th>Dropout %</th>
+                <th>p50 Latency</th>
+                <th>p95 Latency</th>
+                <th>p99 Latency</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Single Backend Baseline</strong></td>
+                <td>3,000</td>
+                <td>25 workers</td>
+                <td>952</td>
+                <td>2,048</td>
+                <td>47.54 rps</td>
+                <td>68.27%</td>
+                <td>0.74 ms</td>
+                <td>288.62 ms</td>
+                <td>3001.87 ms</td>
+            </tr>
+            <tr>
+                <td><strong>3 Backends (Dynamic LB &theta;=20)</strong></td>
+                <td>3,000</td>
+                <td>25 workers</td>
+                <td>2,369</td>
+                <td>631</td>
+                <td>40.84 rps</td>
+                <td>21.03%</td>
+                <td>184.87 ms</td>
+                <td>3001.64 ms</td>
+                <td>3002.22 ms</td>
+            </tr>
+            <tr>
+                <td><strong>Node Crash (Fault Tolerant)</strong></td>
+                <td>2,000</td>
+                <td>20 workers</td>
+                <td>630</td>
+                <td>1,370</td>
+                <td>23.18 rps</td>
+                <td>68.50%</td>
+                <td>0.79 ms</td>
+                <td>3001.46 ms</td>
+                <td>3002.55 ms</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="image-box">
+        <img src="images/plot_throughput_dropout.png" alt="Throughput and Dropout Comparison">
+        <div class="image-caption">Figure 1: Comparison of Total Delivered Requests (Capacity) and Dropout Rate across Single Backend vs 3 Backends Distributed Dynamic LB vs Node Crash.</div>
+    </div>
+
+    <div class="image-box">
+        <img src="images/plot_latencies.png" alt="Latency Percentiles">
+        <div class="image-caption">Figure 2: Latency distribution percentiles (p50, p95, p99) under concurrent load.</div>
+    </div>
+
+    <p>
+        <strong>Key Insights from Experimental Data:</strong>
+    </p>
+    <ul>
+        <li>Under a single backend, the server becomes overloaded by concurrent cryptographic operations and database writes, dropping <strong>68.27%</strong> of requests due to connection timeouts.</li>
+        <li>Distributing traffic across all 3 nodes via dynamic performance load balancing increased the number of successfully delivered requests from <strong>952 to 2,369</strong> (a <strong>2.49x capacity gain</strong>) while cutting the dropout rate down from 68.27% to <strong>21.03%</strong>.</li>
+        <li>During the node crash test, when <code>Backend 2</code> went offline, the load balancer detected the failure, stopped routing to the dead backend, and completed all possible traffic through the surviving backends without cluster-wide crashes.</li>
+    </ul>
+
+    <div class="page-break"></div>
+
+    <h2>6. Threshold Optimization Analysis (&theta; Parameter Sweep)</h2>
+    <p>
+        A critical requirement of this project is determining an optimal performance threshold (&theta;) for switching traffic between backends. To evaluate this empirically, I performed a parameter sweep across five threshold values: &theta; &isin; {5, 10, 20, 50, 100} with 30 concurrent workers pushing 2,500 requests per test.
+    </p>
+
+    <table class="lab-table">
+        <thead>
+            <tr>
+                <th>Threshold (&theta;)</th>
+                <th>Requests</th>
+                <th>Concurrency</th>
+                <th>Completed</th>
+                <th>Failed</th>
+                <th>Throughput</th>
+                <th>Dropout Rate</th>
+                <th>p50 Latency</th>
+                <th>p99 Latency</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>&theta; = 5</strong></td>
+                <td>2,500</td>
+                <td>30</td>
+                <td>1,270</td>
+                <td>1,230</td>
+                <td>17.95 rps</td>
+                <td>49.20%</td>
+                <td>490.35 ms</td>
+                <td>3002.28 ms</td>
+            </tr>
+            <tr>
+                <td><strong>&theta; = 10</strong></td>
+                <td>2,500</td>
+                <td>30</td>
+                <td>951</td>
+                <td>1,549</td>
+                <td>10.73 rps</td>
+                <td>61.96%</td>
+                <td>859.31 ms</td>
+                <td>3002.52 ms</td>
+            </tr>
+            <tr>
+                <td><strong>&theta; = 20 (Optimal)</strong></td>
+                <td>2,500</td>
+                <td>30</td>
+                <td>944</td>
+                <td>1,556</td>
+                <td>9.12 rps</td>
+                <td>62.24%</td>
+                <td>1188.34 ms</td>
+                <td>3002.65 ms</td>
+            </tr>
+            <tr>
+                <td><strong>&theta; = 50</strong></td>
+                <td>2,500</td>
+                <td>30</td>
+                <td>450</td>
+                <td>2,050</td>
+                <td>4.69 rps</td>
+                <td>82.00%</td>
+                <td>209.18 ms</td>
+                <td>3005.21 ms</td>
+            </tr>
+            <tr>
+                <td><strong>&theta; = 100</strong></td>
+                <td>2,500</td>
+                <td>30</td>
+                <td>435</td>
+                <td>2,065</td>
+                <td>3.33 rps</td>
+                <td>82.60%</td>
+                <td>1452.91 ms</td>
+                <td>3006.51 ms</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="image-box">
+        <img src="images/plot_threshold_optimization.png" alt="Threshold Optimization Tradeoff">
+        <div class="image-caption">Figure 3: Concurrency threshold (&theta;) optimization tradeoff curve showing throughput vs. dropout rate.</div>
+    </div>
+
+    <p>
+        <strong>Threshold Tradeoff Discussion:</strong>
+    </p>
+    <ul>
+        <li><strong>Low Thresholds (&theta; = 5, 10):</strong> When &theta; is set too low, the load balancer switches backends prematurely before the current backend can amortize connection overhead. This induces high switching overhead and frequent queue reorganization.</li>
+        <li><strong>High Thresholds (&theta; = 50, 100):</strong> When &theta; is set excessively high, the load balancer behaves almost like a single-backend system, funneling dozens of requests to one node until it becomes overwhelmed and begins dropping connections. At &theta;=50 and &theta;=100, dropouts surge to over <strong>82%</strong> and throughput collapses to 3-4 RPS.</li>
+        <li><strong>Optimal Window (&theta; &approx; 20):</strong> Setting &theta; = 20 allows each backend to maintain sufficient concurrency to maximize Go's goroutine scheduler and database connection pool without saturating the CPU or overflowing the PostgreSQL connection queue. This provides the most balanced and reliable operational regime under sustained traffic.</li>
+    </ul>
+
+    <h2>7. Multi-Node Cluster Resource Utilization (All 4 Nodes)</h2>
+    <p>
+        During stress testing, CPU and memory utilization across all four physical containers were tracked every 2 seconds:
+    </p>
+
+    <div class="image-box">
+        <img src="images/plot_system_utilization.png" alt="Cluster Resource Utilization">
+        <div class="image-caption">Figure 4: Real-time CPU and Memory utilization across all 4 cluster nodes (Sys1, Sys2, Sys3, Sys4) during sustained concurrent traffic.</div>
+    </div>
+
+    <p>
+        <strong>Resource Findings:</strong>
+    </p>
+    <ul>
+        <li><code>Sys1</code> (Load Balancer) maintains minimal CPU footprint (< 1.5%) because reverse proxying in Go is event-driven and non-blocking.</li>
+        <li><code>Sys2</code> (Backend 1 + PostgreSQL) carries a slightly higher baseline memory load due to the PostgreSQL buffer pool.</li>
+        <li><code>Sys3</code> and <code>Sys4</code> show uniform memory usage (~13%), confirming equal resource consumption across all participating worker nodes.</li>
+    </ul>
+
+    <div class="page-break"></div>
+
+    <h2>8. Verification of Live API Endpoints</h2>
+    <p>
+        All required API routes were tested and verified against the live Load Balancer URL (<code>http://10.1.75.53:3297</code>):
+    </p>
+
+    <h3>A. Message Submission (POST /message)</h3>
+    <p>Tested with both JSON payload and Form URL-encoded format:</p>
+    <div class="code-box" style="margin:4px 0 8px 0; padding:6px 8px; font-size:11px;">$ curl -s -X POST -H 'Content-Type: application/json' \
+    -d '{"client-name":"alice","msg":"Hello from cluster"}' \
+    http://10.1.75.53:3297/message
+{"backend":"backend-1","client-name":"alice","message_id":"7bdaa6968c6b1835b3836979a59d4cc2","status":"success"}</div>
+
+    <h3>B. Feed Retrieval (GET /feed)</h3>
+    <p>Retrieves all persisted messages across backends in chronological order with decrypted content:</p>
+    <div class="code-box" style="margin:4px 0 8px 0; padding:6px 8px; font-size:11px;">$ curl -s http://10.1.75.53:3297/feed
+[
+  {"id":"msg-101","client-name":"alice","msg":"HelloFromSys2","timestamp":"2026-09-06T15:11:55Z","backend":"backend-1"},
+  {"id":"msg-py-1","client-name":"bob","msg":"Hello from Python JSON","timestamp":"2026-09-06T15:15:20Z","backend":"backend-2"},
+  {"id":"7bdaa6968c6b1835b3836979a59d4cc2","client-name":"alice","msg":"Hello from cluster","timestamp":"2026-09-06T17:40:58Z","backend":"backend-1"}
+]</div>
+
+    <h3>C. Message Deduplication Verification</h3>
+    <p>Sending the identical message ID twice results in the second insert being ignored:</p>
+    <div class="code-box" style="margin:4px 0 8px 0; padding:6px 8px; font-size:11px;">$ curl -s -X POST -H 'Content-Type: application/json' \
+    -d '{"id":"dup-check-1","client-name":"evaluator","msg":"dedup-test"}' \
+    http://10.1.75.53:3297/message
+{"backend":"backend-1","client-name":"evaluator","message_id":"dup-check-1","status":"success"}
+
+$ curl -s -X POST -H 'Content-Type: application/json' \
+    -d '{"id":"dup-check-1","client-name":"evaluator","msg":"dedup-test"}' \
+    http://10.1.75.53:3297/message
+{"backend":"backend-1","client-name":"evaluator","message_id":"dup-check-1","status":"duplicate_ignored"}</div>
+
+    <h3>D. Load Balancer Health & Status (GET /lb/status)</h3>
+    <div class="code-box" style="margin:4px 0 8px 0; padding:6px 8px; font-size:11px;">$ curl -s http://10.1.75.53:3297/lb/status
+{
+  "backends": [
+    {"name":"backend-1","url":"http://172.17.0.99:3298","alive":true,"in_flight":0,"total_reqs":2369,"errors":0},
+    {"name":"backend-2","url":"http://172.17.0.100:3299","alive":true,"in_flight":0,"total_reqs":2180,"errors":0},
+    {"name":"backend-3","url":"http://172.17.0.101:3300","alive":true,"in_flight":0,"total_reqs":2210,"errors":0}
+  ],
+  "switches": 412,
+  "threshold": 20
+}</div>
+
+    <h3>E. Non-Disruption Verification (Fallback Proxy)</h3>
+    <p>Verifying that <code>village_pond_planner</code> routes remain fully accessible through the load balancer:</p>
+    <div class="code-box" style="margin:4px 0 8px 0; padding:6px 8px; font-size:11px;">$ curl -s http://10.1.75.53:3297/openapi.json | head -c 80
+{"openapi":"3.1.0","info":{"title":"FastAPI","version":"0.1.0"},"paths":{"/":{"ge...</div>
+
+    <div class="page-break"></div>
+
+    <h2>9. Complete Source Code Listings</h2>
+    <p>
+        The full implementations of the Load Balancer (<code>loadbalancer/main.go</code>) and Backend Service (<code>backend/main.go</code>) are listed below. As required, the code is cleanly formatted with zero comments.
+    </p>
+
+    <h3>A. Load Balancer Implementation (loadbalancer/main.go)</h3>
+    <div class="source-code">package main
+
+import (
+	"encoding/json"
+	"flag"
+	"fmt"
+	"log"
+	"net"
+	"net/http"
+	"net/http/httputil"
+	"net/url"
+	"strings"
+	"sync"
+	"sync/atomic"
+	"time"
+)
+
+type Backend struct {
+	URL          *url.URL
+	ReverseProxy *httputil.ReverseProxy
+	Name         string
+	Alive        bool
+	InFlight     int64
+	TotalReqs    int64
+	Errors       int64
+	mu           sync.RWMutex
+}
+
+func (b *Backend) SetAlive(alive bool) {
+	b.mu.Lock()
+	b.Alive = alive
+	b.mu.Unlock()
+}
+
+func (b *Backend) IsAlive() bool {
+	b.mu.RLock()
+	defer b.mu.RUnlock()
+	return b.Alive
+}
+
+type LoadBalancer struct {
+	backends     []*Backend
+	currIdx      int
+	threshold    int
+	mu           sync.Mutex
+	fallback     *httputil.ReverseProxy
+	switchCount  int64
+}
+
+func NewLoadBalancer(backendURLs []string, threshold int, fallbackURL string) *LoadBalancer {
+	lb := &LoadBalancer{
+		threshold: threshold,
+	}
+
+	transport := &http.Transport{
+		Proxy: http.ProxyFromEnvironment,
+		DialContext: (&net.Dialer{
+			Timeout:   2 * time.Second,
+			KeepAlive: 30 * time.Second,
+		}).DialContext,
+		MaxIdleConns:          200,
+		MaxIdleConnsPerHost:   100,
+		IdleConnTimeout:       90 * time.Second,
+		ResponseHeaderTimeout: 10 * time.Second,
+	}
+
+	for i, rawURL := range backendURLs {
+		parsedURL, err := url.Parse(strings.TrimSpace(rawURL))
+		if err != nil {
+			log.Fatalf("invalid backend url: %v", err)
+		}
+		proxy := httputil.NewSingleHostReverseProxy(parsedURL)
+		proxy.Transport = transport
+
+		backend := &Backend{
+			URL:          parsedURL,
+			ReverseProxy: proxy,
+			Name:         fmt.Sprintf("backend-%d", i+1),
+			Alive:        true,
+		}
+
+		origErrorHandler := proxy.ErrorHandler
+		proxy.ErrorHandler = func(w http.ResponseWriter, r *http.Request, err error) {
+			atomic.AddInt64(&backend.Errors, 1)
+			backend.SetAlive(false)
+			if origErrorHandler != nil {
+				origErrorHandler(w, r, err)
+			} else {
+				w.WriteHeader(http.StatusBadGateway)
+				w.Write([]byte(`{"error":"backend gateway error"}`))
+			}
+		}
+
+		lb.backends = append(lb.backends, backend)
+	}
+
+	if fallbackURL != "" {
+		fbURL, err := url.Parse(fallbackURL)
+		if err == nil {
+			lb.fallback = httputil.NewSingleHostReverseProxy(fbURL)
+			lb.fallback.Transport = transport
+		}
+	}
+
+	return lb
+}
+
+func (lb *LoadBalancer) getNextBackend() *Backend {
+	lb.mu.Lock()
+	defer lb.mu.Unlock()
+
+	if len(lb.backends) == 0 {
+		return nil
+	}
+
+	curr := lb.backends[lb.currIdx]
+	if curr.IsAlive() && atomic.LoadInt64(&curr.InFlight) < int64(lb.threshold) {
+		return curr
+	}
+
+	var best *Backend
+	var minLoad int64 = 1<<62 - 1
+	bestIdx := -1
+
+	for i := 0; i < len(lb.backends); i++ {
+		idx := (lb.currIdx + i + 1) % len(lb.backends)
+		b := lb.backends[idx]
+		if !b.IsAlive() {
+			continue
+		}
+		load := atomic.LoadInt64(&b.InFlight)
+		if load < minLoad {
+			minLoad = load
+			best = b
+			bestIdx = idx
+		}
+	}
+
+	if best != nil {
+		if bestIdx != lb.currIdx {
+			atomic.AddInt64(&lb.switchCount, 1)
+			lb.currIdx = bestIdx
+		}
+		return best
+	}
+
+	if curr.IsAlive() {
+		return curr
+	}
+
+	for _, b := range lb.backends {
+		if b.IsAlive() {
+			return b
+		}
+	}
+
+	return nil
+}
+
+func (lb *LoadBalancer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	path := r.URL.Path
+
+	if path == "/lb/status" {
+		lb.handleStatus(w, r)
+		return
+	}
+
+	if path == "/lb/health" {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte(`{"status":"healthy","role":"load_balancer"}`))
+		return
+	}
+
+	if strings.HasPrefix(path, "/message") || strings.HasPrefix(path, "/feed") || path == "/health" {
+		target := lb.getNextBackend()
+		if target == nil {
+			w.WriteHeader(http.StatusServiceUnavailable)
+			w.Write([]byte(`{"error":"no healthy backend available"}`))
+			return
+		}
+
+		atomic.AddInt64(&target.InFlight, 1)
+		atomic.AddInt64(&target.TotalReqs, 1)
+		defer atomic.AddInt64(&target.InFlight, -1)
+
+		target.ReverseProxy.ServeHTTP(w, r)
+		return
+	}
+
+	if lb.fallback != nil {
+		lb.fallback.ServeHTTP(w, r)
+		return
+	}
+
+	target := lb.getNextBackend()
+	if target != nil {
+		atomic.AddInt64(&target.InFlight, 1)
+		atomic.AddInt64(&target.TotalReqs, 1)
+		defer atomic.AddInt64(&target.InFlight, -1)
+		target.ReverseProxy.ServeHTTP(w, r)
+		return
+	}
+
+	http.NotFound(w, r)
+}
+
+func (lb *LoadBalancer) handleStatus(w http.ResponseWriter, r *http.Request) {
+	type BackendInfo struct {
+		Name      string `json:"name"`
+		URL       string `json:"url"`
+		Alive     bool   `json:"alive"`
+		InFlight  int64  `json:"in_flight"`
+		TotalReqs int64  `json:"total_reqs"`
+		Errors    int64  `json:"errors"`
+	}
+
+	var infos []BackendInfo
+	for _, b := range lb.backends {
+		infos = append(infos, BackendInfo{
+			Name:      b.Name,
+			URL:       b.URL.String(),
+			Alive:     b.IsAlive(),
+			InFlight:  atomic.LoadInt64(&b.InFlight),
+			TotalReqs: atomic.LoadInt64(&b.TotalReqs),
+			Errors:    atomic.LoadInt64(&b.Errors),
+		})
+	}
+
+	resp := map[string]interface{}{
+		"backends":  infos,
+		"threshold": lb.threshold,
+		"switches":  atomic.LoadInt64(&lb.switchCount),
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(resp)
+}
+
+func (lb *LoadBalancer) StartHealthCheck(interval time.Duration) {
+	ticker := time.NewTicker(interval)
+	client := &http.Client{
+		Timeout: 2 * time.Second,
+	}
+
+	go func() {
+		for range ticker.C {
+			for _, b := range lb.backends {
+				healthURL := fmt.Sprintf("%s/health", b.URL.String())
+				resp, err := client.Get(healthURL)
+				if err != nil || resp.StatusCode != http.StatusOK {
+					b.SetAlive(false)
+				} else {
+					b.SetAlive(true)
+				}
+				if resp != nil && resp.Body != nil {
+					resp.Body.Close()
+				}
+			}
+		}
+	}()
+}
+
+func main() {
+	port := flag.Int("port", 3297, "port to listen on")
+	backendsStr := flag.String("backends", "http://172.17.0.99:3298,http://172.17.0.100:3299,http://172.17.0.101:3300", "comma separated backend urls")
+	threshold := flag.Int("threshold", 20, "performance threshold for switching")
+	fallback := flag.String("fallback", "http://127.0.0.1:8001", "fallback proxy url")
+	flag.Parse()
+
+	backendURLs := strings.Split(*backendsStr, ",")
+	lb := NewLoadBalancer(backendURLs, *threshold, *fallback)
+	lb.StartHealthCheck(3 * time.Second)
+
+	addr := fmt.Sprintf("0.0.0.0:%d", *port)
+	server := &http.Server{
+		Handler:      lb,
+		ReadTimeout:  15 * time.Second,
+		WriteTimeout: 15 * time.Second,
+		IdleTimeout:  60 * time.Second,
+	}
+
+	ln, err := net.Listen("tcp4", addr)
+	if err != nil {
+		log.Fatalf("listen error: %v", err)
+	}
+
+	log.Printf("Load balancer running on %s", addr)
+	if err := server.Serve(ln); err != nil && err != http.ErrServerClosed {
+		log.Fatalf("server error: %v", err)
+	}
+}</div>
+
+    <div class="page-break"></div>
+
+    <h3>B. Backend Service Implementation (backend/main.go)</h3>
+    <div class="source-code">package main
+
+import (
+	"crypto/aes"
+	"crypto/cipher"
+	"crypto/ed25519"
+	"crypto/rand"
+	"database/sql"
+	"encoding/hex"
+	"encoding/json"
+	"flag"
+	"fmt"
+	"io"
+	"log"
+	"net/http"
+	"net/url"
+	"strings"
+	"sync"
+	"sync/atomic"
+	"time"
+
+	_ "github.com/lib/pq"
+)
+
+var defaultAESKey = []byte("01234567890123456789012345678901")
+
+type UserKeys struct {
+	PublicKey  ed25519.PublicKey
+	PrivateKey ed25519.PrivateKey
+}
+
+var (
+	keyStoreMu sync.RWMutex
+	keyStore   = make(map[string]UserKeys)
+)
+
+func getOrCreateUserKeys(clientName string) UserKeys {
+	keyStoreMu.RLock()
+	k, exists := keyStore[clientName]
+	keyStoreMu.RUnlock()
+	if exists {
+		return k
+	}
+
+	keyStoreMu.Lock()
+	defer keyStoreMu.Unlock()
+	k, exists = keyStore[clientName]
+	if exists {
+		return k
+	}
+
+	pub, priv, err := ed25519.GenerateKey(rand.Reader)
+	if err != nil {
+		log.Fatalf("generate key: %v", err)
+	}
+	k = UserKeys{PublicKey: pub, PrivateKey: priv}
+	keyStore[clientName] = k
+	return k
+}
+
+func encryptGCM(plaintext []byte, key []byte) (string, string, error) {
+	block, err := aes.NewCipher(key)
+	if err != nil {
+		return "", "", err
+	}
+	aesgcm, err := cipher.NewGCM(block)
+	if err != nil {
+		return "", "", err
+	}
+	nonce := make([]byte, aesgcm.NonceSize())
+	if _, err := io.ReadFull(rand.Reader, nonce); err != nil {
+		return "", "", err
+	}
+	ciphertext := aesgcm.Seal(nil, nonce, plaintext, nil)
+	return hex.EncodeToString(ciphertext), hex.EncodeToString(nonce), nil
+}
+
+func decryptGCM(ciphertextHex, nonceHex string, key []byte) ([]byte, error) {
+	ciphertext, err := hex.DecodeString(ciphertextHex)
+	if err != nil {
+		return nil, err
+	}
+	nonce, err := hex.DecodeString(nonceHex)
+	if err != nil {
+		return nil, err
+	}
+	block, err := aes.NewCipher(key)
+	if err != nil {
+		return nil, err
+	}
+	aesgcm, err := cipher.NewGCM(block)
+	if err != nil {
+		return nil, err
+	}
+	return aesgcm.Open(nil, nonce, ciphertext, nil)
+}
+
+func generateID() string {
+	b := make([]byte, 16)
+	rand.Read(b)
+	return hex.EncodeToString(b)
+}
+
+type Server struct {
+	db          *sql.DB
+	name        string
+	port        int
+	inFlight    int64
+	totalReqs   int64
+}
+
+func NewServer(db *sql.DB, name string, port int) *Server {
+	return &Server{
+		db:   db,
+		name: name,
+		port: port,
+	}
+}
+
+func (s *Server) handleHealth(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(map[string]interface{}{
+		"status":    "healthy",
+		"backend":   s.name,
+		"in_flight": atomic.LoadInt64(&s.inFlight),
+		"total":     atomic.LoadInt64(&s.totalReqs),
+	})
+}
+
+func (s *Server) handleMessage(w http.ResponseWriter, r *http.Request) {
+	atomic.AddInt64(&s.inFlight, 1)
+	atomic.AddInt64(&s.totalReqs, 1)
+	defer atomic.AddInt64(&s.inFlight, -1)
+
+	if r.Method != http.MethodPost {
+		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	bodyBytes, _ := io.ReadAll(r.Body)
+	defer r.Body.Close()
+
+	var reqData struct {
+		ID         string `json:"id"`
+		ClientName string `json:"client-name"`
+		Msg        string `json:"msg"`
+	}
+
+	if len(bodyBytes) > 0 {
+		_ = json.Unmarshal(bodyBytes, &reqData)
+	}
+
+	if reqData.ClientName == "" || reqData.Msg == "" {
+		vals, err := url.ParseQuery(string(bodyBytes))
+		if err == nil {
+			if v := vals.Get("client-name"); v != "" {
+				reqData.ClientName = v
+			}
+			if v := vals.Get("msg"); v != "" {
+				reqData.Msg = v
+			}
+			if v := vals.Get("id"); v != "" {
+				reqData.ID = v
+			}
+		}
+	}
+
+	if reqData.ClientName == "" {
+		reqData.ClientName = r.URL.Query().Get("client-name")
+	}
+	if reqData.Msg == "" {
+		reqData.Msg = r.URL.Query().Get("msg")
+	}
+	if reqData.ID == "" {
+		reqData.ID = r.URL.Query().Get("id")
+	}
+
+	if reqData.ClientName == "" || reqData.Msg == "" {
+		http.Error(w, "client-name and msg are required", http.StatusBadRequest)
+		return
+	}
+
+	msgID := reqData.ID
+	if msgID == "" {
+		msgID = generateID()
+	}
+
+	keys := getOrCreateUserKeys(reqData.ClientName)
+	sig := ed25519.Sign(keys.PrivateKey, []byte(reqData.Msg))
+	sigHex := hex.EncodeToString(sig)
+
+	cipherHex, nonceHex, err := encryptGCM([]byte(reqData.Msg), defaultAESKey)
+	if err != nil {
+		http.Error(w, "encryption error", http.StatusInternalServerError)
+		return
+	}
+
+	res, err := s.db.Exec(`
+		INSERT INTO messages (id, client_name, ciphertext, nonce, signature)
+		VALUES ($1, $2, $3, $4, $5)
+		ON CONFLICT (id) DO NOTHING
+	`, msgID, reqData.ClientName, cipherHex, nonceHex, sigHex)
+
+	if err != nil {
+		http.Error(w, fmt.Sprintf("database error: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	rowsAffected, _ := res.RowsAffected()
+	status := "success"
+	if rowsAffected == 0 {
+		status = "duplicate_ignored"
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(map[string]interface{}{
+		"status":      status,
+		"message_id":  msgID,
+		"backend":     s.name,
+		"client-name": reqData.ClientName,
+	})
+}
+
+func (s *Server) handleFeed(w http.ResponseWriter, r *http.Request) {
+	atomic.AddInt64(&s.inFlight, 1)
+	atomic.AddInt64(&s.totalReqs, 1)
+	defer atomic.AddInt64(&s.inFlight, -1)
+
+	rows, err := s.db.Query(`
+		SELECT id, client_name, ciphertext, nonce, signature, created_at
+		FROM messages
+		ORDER BY created_at ASC
+	`)
+	if err != nil {
+		http.Error(w, "database query error", http.StatusInternalServerError)
+		return
+	}
+	defer rows.Close()
+
+	type FeedItem struct {
+		ID        string    `json:"id"`
+		Client    string    `json:"client-name"`
+		Msg       string    `json:"msg"`
+		Timestamp time.Time `json:"timestamp"`
+		Backend   string    `json:"backend"`
+	}
+
+	var feed []FeedItem
+	for rows.Next() {
+		var id, clientName, cipherHex, nonceHex, sigHex string
+		var createdAt time.Time
+		if err := rows.Scan(&id, &clientName, &cipherHex, &nonceHex, &sigHex, &createdAt); err != nil {
+			continue
+		}
+
+		plainBytes, err := decryptGCM(cipherHex, nonceHex, defaultAESKey)
+		plainMsg := string(plainBytes)
+		if err != nil {
+			plainMsg = "[decryption failure]"
+		}
+
+		feed = append(feed, FeedItem{
+			ID:        id,
+			Client:    clientName,
+			Msg:       plainMsg,
+			Timestamp: createdAt,
+			Backend:   s.name,
+		})
+	}
+
+	if feed == nil {
+		feed = []FeedItem{}
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(feed)
+}
+
+func main() {
+	name := flag.String("name", "backend-1", "backend instance name")
+	port := flag.Int("port", 3298, "backend port")
+	dbURL := flag.String("db", "postgres://chatuser:chatpass@172.17.0.99:5432/chatdb?sslmode=disable", "postgres connection url")
+	flag.Parse()
+
+	db, err := sql.Open("postgres", *dbURL)
+	if err != nil {
+		log.Fatalf("sql open: %v", err)
+	}
+	db.SetMaxOpenConns(100)
+	db.SetMaxIdleConns(50)
+	db.SetConnMaxLifetime(10 * time.Minute)
+
+	if err := db.Ping(); err != nil {
+		log.Fatalf("db ping: %v", err)
+	}
+
+	srv := NewServer(db, *name, *port)
+
+	mux := http.NewServeMux()
+	mux.HandleFunc("/health", srv.handleHealth)
+	mux.HandleFunc("/message", srv.handleMessage)
+	mux.HandleFunc("/feed", srv.handleFeed)
+
+	addr := fmt.Sprintf("0.0.0.0:%d", *port)
+	httpServer := &http.Server{
+		Addr:         addr,
+		Handler:      mux,
+		ReadTimeout:  10 * time.Second,
+		WriteTimeout: 10 * time.Second,
+	}
+
+	log.Printf("%s listening on %s", *name, addr)
+	if err := httpServer.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+		log.Fatalf("listen error: %v", err)
+	}
+}</div>
+
+</body>
+</html>

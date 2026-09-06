@@ -1,0 +1,15 @@
+{
+  "experiment": "3_Backends",
+  "url": "http://127.0.0.1:3297/?delay=25ms",
+  "requests": 10000,
+  "concurrency": 100,
+  "successful": 10000,
+  "failed": 0,
+  "elapsed_time_sec": 20.908910145,
+  "throughput_rps": 478.2650042805471,
+  "dropout_percent": 0,
+  "p50_ms": 198.108,
+  "p95_ms": 397.816,
+  "p99_ms": 499.947,
+  "timestamp": "2026-08-23T15:39:00Z"
+}

@@ -1,0 +1,377 @@
+[
+  {
+    "timestamp": 0,
+    "nodes": {
+      "Sys1 (Load Balancer)": {
+        "cpu_pct": 0.41,
+        "mem_pct": 12.77,
+        "mem_used_mb": 16445
+      },
+      "Sys2 (Backend 1 + DB)": {
+        "cpu_pct": 0.41,
+        "mem_pct": 12.77,
+        "mem_used_mb": 16450
+      },
+      "Sys3 (Backend 2)": {
+        "cpu_pct": 0.42,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16453
+      },
+      "Sys4 (Backend 3)": {
+        "cpu_pct": 0.42,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16453
+      }
+    }
+  },
+  {
+    "timestamp": 2,
+    "nodes": {
+      "Sys1 (Load Balancer)": {
+        "cpu_pct": 0.39,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16451
+      },
+      "Sys2 (Backend 1 + DB)": {
+        "cpu_pct": 0.42,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16453
+      },
+      "Sys3 (Backend 2)": {
+        "cpu_pct": 0.44,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16455
+      },
+      "Sys4 (Backend 3)": {
+        "cpu_pct": 0.44,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16456
+      }
+    }
+  },
+  {
+    "timestamp": 4,
+    "nodes": {
+      "Sys1 (Load Balancer)": {
+        "cpu_pct": 0.44,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16455
+      },
+      "Sys2 (Backend 1 + DB)": {
+        "cpu_pct": 0.41,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16454
+      },
+      "Sys3 (Backend 2)": {
+        "cpu_pct": 0.39,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16456
+      },
+      "Sys4 (Backend 3)": {
+        "cpu_pct": 0.39,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16457
+      }
+    }
+  },
+  {
+    "timestamp": 6,
+    "nodes": {
+      "Sys1 (Load Balancer)": {
+        "cpu_pct": 0.4,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16454
+      },
+      "Sys2 (Backend 1 + DB)": {
+        "cpu_pct": 0.42,
+        "mem_pct": 12.77,
+        "mem_used_mb": 16449
+      },
+      "Sys3 (Backend 2)": {
+        "cpu_pct": 0.41,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16453
+      },
+      "Sys4 (Backend 3)": {
+        "cpu_pct": 0.41,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16456
+      }
+    }
+  },
+  {
+    "timestamp": 8,
+    "nodes": {
+      "Sys1 (Load Balancer)": {
+        "cpu_pct": 0.42,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16452
+      },
+      "Sys2 (Backend 1 + DB)": {
+        "cpu_pct": 0.43,
+        "mem_pct": 12.77,
+        "mem_used_mb": 16449
+      },
+      "Sys3 (Backend 2)": {
+        "cpu_pct": 0.45,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16452
+      },
+      "Sys4 (Backend 3)": {
+        "cpu_pct": 0.46,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16453
+      }
+    }
+  },
+  {
+    "timestamp": 10,
+    "nodes": {
+      "Sys1 (Load Balancer)": {
+        "cpu_pct": 0.44,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16451
+      },
+      "Sys2 (Backend 1 + DB)": {
+        "cpu_pct": 0.43,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16452
+      },
+      "Sys3 (Backend 2)": {
+        "cpu_pct": 0.41,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16453
+      },
+      "Sys4 (Backend 3)": {
+        "cpu_pct": 0.41,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16451
+      }
+    }
+  },
+  {
+    "timestamp": 12,
+    "nodes": {
+      "Sys1 (Load Balancer)": {
+        "cpu_pct": 0.39,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16452
+      },
+      "Sys2 (Backend 1 + DB)": {
+        "cpu_pct": 0.38,
+        "mem_pct": 12.77,
+        "mem_used_mb": 16449
+      },
+      "Sys3 (Backend 2)": {
+        "cpu_pct": 0.38,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16451
+      },
+      "Sys4 (Backend 3)": {
+        "cpu_pct": 0.39,
+        "mem_pct": 12.77,
+        "mem_used_mb": 16448
+      }
+    }
+  },
+  {
+    "timestamp": 14,
+    "nodes": {
+      "Sys1 (Load Balancer)": {
+        "cpu_pct": 0.41,
+        "mem_pct": 12.77,
+        "mem_used_mb": 16450
+      },
+      "Sys2 (Backend 1 + DB)": {
+        "cpu_pct": 0.42,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16452
+      },
+      "Sys3 (Backend 2)": {
+        "cpu_pct": 0.42,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16451
+      },
+      "Sys4 (Backend 3)": {
+        "cpu_pct": 0.42,
+        "mem_pct": 12.77,
+        "mem_used_mb": 16448
+      }
+    }
+  },
+  {
+    "timestamp": 16,
+    "nodes": {
+      "Sys1 (Load Balancer)": {
+        "cpu_pct": 0.41,
+        "mem_pct": 12.77,
+        "mem_used_mb": 16444
+      },
+      "Sys2 (Backend 1 + DB)": {
+        "cpu_pct": 0.42,
+        "mem_pct": 12.77,
+        "mem_used_mb": 16448
+      },
+      "Sys3 (Backend 2)": {
+        "cpu_pct": 0.43,
+        "mem_pct": 12.77,
+        "mem_used_mb": 16446
+      },
+      "Sys4 (Backend 3)": {
+        "cpu_pct": 0.42,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16451
+      }
+    }
+  },
+  {
+    "timestamp": 18,
+    "nodes": {
+      "Sys1 (Load Balancer)": {
+        "cpu_pct": 0.44,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16451
+      },
+      "Sys2 (Backend 1 + DB)": {
+        "cpu_pct": 0.43,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16454
+      },
+      "Sys3 (Backend 2)": {
+        "cpu_pct": 0.42,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16454
+      },
+      "Sys4 (Backend 3)": {
+        "cpu_pct": 0.41,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16456
+      }
+    }
+  },
+  {
+    "timestamp": 20,
+    "nodes": {
+      "Sys1 (Load Balancer)": {
+        "cpu_pct": 0.42,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16454
+      },
+      "Sys2 (Backend 1 + DB)": {
+        "cpu_pct": 0.42,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16453
+      },
+      "Sys3 (Backend 2)": {
+        "cpu_pct": 0.42,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16452
+      },
+      "Sys4 (Backend 3)": {
+        "cpu_pct": 0.43,
+        "mem_pct": 12.77,
+        "mem_used_mb": 16449
+      }
+    }
+  },
+  {
+    "timestamp": 22,
+    "nodes": {
+      "Sys1 (Load Balancer)": {
+        "cpu_pct": 0.39,
+        "mem_pct": 12.77,
+        "mem_used_mb": 16447
+      },
+      "Sys2 (Backend 1 + DB)": {
+        "cpu_pct": 0.41,
+        "mem_pct": 12.77,
+        "mem_used_mb": 16449
+      },
+      "Sys3 (Backend 2)": {
+        "cpu_pct": 0.42,
+        "mem_pct": 12.77,
+        "mem_used_mb": 16450
+      },
+      "Sys4 (Backend 3)": {
+        "cpu_pct": 0.42,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16454
+      }
+    }
+  },
+  {
+    "timestamp": 24,
+    "nodes": {
+      "Sys1 (Load Balancer)": {
+        "cpu_pct": 0.44,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16453
+      },
+      "Sys2 (Backend 1 + DB)": {
+        "cpu_pct": 0.43,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16455
+      },
+      "Sys3 (Backend 2)": {
+        "cpu_pct": 0.42,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16458
+      },
+      "Sys4 (Backend 3)": {
+        "cpu_pct": 0.41,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16460
+      }
+    }
+  },
+  {
+    "timestamp": 26,
+    "nodes": {
+      "Sys1 (Load Balancer)": {
+        "cpu_pct": 0.41,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16456
+      },
+      "Sys2 (Backend 1 + DB)": {
+        "cpu_pct": 0.41,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16455
+      },
+      "Sys3 (Backend 2)": {
+        "cpu_pct": 0.4,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16458
+      },
+      "Sys4 (Backend 3)": {
+        "cpu_pct": 0.41,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16461
+      }
+    }
+  },
+  {
+    "timestamp": 28,
+    "nodes": {
+      "Sys1 (Load Balancer)": {
+        "cpu_pct": 0.4,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16453
+      },
+      "Sys2 (Backend 1 + DB)": {
+        "cpu_pct": 0.41,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16459
+      },
+      "Sys3 (Backend 2)": {
+        "cpu_pct": 0.42,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16460
+      },
+      "Sys4 (Backend 3)": {
+        "cpu_pct": 0.42,
+        "mem_pct": 12.78,
+        "mem_used_mb": 16463
+      }
+    }
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "experiment": "Fault_Tolerance_Node_Down",
+  "url": "http://127.0.0.1:3297",
+  "requests": 2000,
+  "concurrency": 20,
+  "successful": 630,
+  "failed": 1370,
+  "elapsed_time_sec": 27.177476371,
+  "throughput_rps": 23.18096027018343,
+  "dropout_percent": 68.5,
+  "p50_ms": 0.794,
+  "p95_ms": 3001.464,
+  "p99_ms": 3002.545,
+  "timestamp": "2026-09-06T17:41:52Z"
+}
